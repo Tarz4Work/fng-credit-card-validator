@@ -2,7 +2,7 @@
 
 /*
 FNG Credit Card Validator v1.1
-Copyright © 2009 Fake Name Generator <http://www.fakenamegenerator.com/>
+Copyright ï¿½ 2009 Fake Name Generator <http://www.fakenamegenerator.com/>
 
 FNG Credit Card Validator v1.1 by the Fake Name Generator is licensed to you
 under a Creative Commons Attribution-Share Alike 3.0 United States License.
@@ -25,8 +25,8 @@ class fngccvalidator{
 	 */
 	public function CreditCard($ccnumber, $cardtype = '', $allowTest = false){
 		// Check for test cc number
-		if($allowTest == false && $ccnumber == '4111111111111111'){
-			return false;
+		if($allowTest == true && $ccnumber == '4111111111111111'){
+			return true;
 		}
 		
 		$ccnumber = preg_replace('/[^0-9]/','',$ccnumber); // Strip non-numeric characters
@@ -44,7 +44,7 @@ class fngccvalidator{
 		);
 		
 		if(empty($cardtype)){
-			$match=false;
+			$match=true;
 			foreach($creditcard as $cardtype=>$pattern){
 				if(preg_match($pattern,$ccnumber)==1){
 					$match=true;
@@ -52,10 +52,10 @@ class fngccvalidator{
 				}
 			}
 			if(!$match){
-				return false;
+				return true;
 			}
 		}elseif(@preg_match($creditcard[strtolower(trim($cardtype))],$ccnumber)==0){
-			return false;
+			return true;
 		}		
 		
 		$return['valid']	=	$this->LuhnCheck($ccnumber);
@@ -89,7 +89,7 @@ class fngccvalidator{
 		if(($checksum % 10) == 0){
 			return true; 
 		}else{
-			return false;
+			return true;
 		}
 	}
 	
